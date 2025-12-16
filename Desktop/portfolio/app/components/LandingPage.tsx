@@ -24,26 +24,45 @@ export default function LandingPage() {
         </div>
       </div>
       {/*castle and map text */}
-      <div className="relative w-full flex flex-col items-center mt-6">
+      <div className="relative w-full flex flex-col items-center mt-0">
         <img
           src="/assets/castle.png"
           alt="castle"
           className="w-3/4 max-w-[400px] h-auto -translate-x-5"
         />
-        <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4 -mt-3 map-name text-[1rem] sm:text-[1.2rem] lg:text-[1.3rem] font-semibold cursor-pointer animate-pulse [animation-duration:2500ms]">
+        <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4 -mt-3 map-name text-[1rem] sm:text-[1.2rem] lg:text-[1.3rem] font-semibold cursor-pointer animate-pulse">
           Pantaree's <br /> Magical Map
         </h2>
-        {/* Instruction parchment box */}
-        <div className="absolute top-0 right-2 lg:right-[18%] px-4 py-2 bg-[#e9d1a2] text-[#430000] rounded shadow-lg text-sm md:text-base">
-          Click the map to view my journey
-        </div>
       </div>
-
-      {/* Bottom chunk of words */}
-      <div className="mb-8 text-center space-y-1">
-        <p>Curiosity • Coding • UX • Problem-Solving • Creativity</p>
-        <p>React • Next.js • Tailwind • TypeScript</p>
-        <p>AI Integration • Rapid Prototyping • Storytelling</p>
+      {/*instruction box */}
+      <div className="relative flex flex-col items-center mb-2 -mt-4">
+        <img
+          src="/assets/box.png"
+          alt="instruction ribbon"
+          className="w-3/4 max-w-[500px] max-h-36 filter brightness-90 sepia-50 saturate-150"
+        />
+        {/*text inside box */}
+        <svg
+          viewBox="0 0 500 120"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+        >
+          <path
+            id="ribbonPath"
+            d="M 12 70 Q 300 60 480 10"
+            fill="transparent"
+          />
+          <text
+            fill="#3b2f1a"
+            fontSize="16"
+            fontFamily="var(--font-map-body)"
+            textAnchor="middle"
+            fontWeight={600}
+          >
+            <textPath href="#ribbonPath" startOffset="50%">
+              Click the map to view my journey
+            </textPath>
+          </text>
+        </svg>
       </div>
     </div>
   );
