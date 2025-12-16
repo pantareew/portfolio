@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+body {
+  background: url("/assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*map title*/
+.heading {
+  font-family: var(--font-map-title), cursive;
+  color: #3b2f1a;
+  text-align: center;
+}
+
+.body-text {
+  font-family: var(--font-map-body), serif;
+  font-size: 1rem;
+  color: #3b2f1a;
+  line-height: 1.6;
+}
+
+/*map name*/
+.map-name {
+  font-family: var(--font-map-body);
+  color: #e9d1a2;
+  text-transform: uppercase;
+}
