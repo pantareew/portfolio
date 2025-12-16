@@ -15,7 +15,7 @@ const greatVibes = Great_Vibes({
 
 const imFell = IM_Fell_English({
   subsets: ["latin"],
-  variable: "--font-map-text",
+  variable: "--font-map-body",
   weight: "400",
 });
 
@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${imFell.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${imFell.variable}  antialiased`}
       >
         {children}
       </body>
