@@ -25,7 +25,7 @@ export default function LoadingFootprints({
       const t = i / totalSteps; //time between 0 (start) to 1 (end)
 
       //path
-      const x = t * window.innerWidth * 0.8; //x position
+      const x = t * window.innerWidth; //x position
       const y = window.innerHeight / 2 + Math.sin(t * Math.PI) * 80; //y position (curve path)
       //add new step
       setSteps((prev) => [
