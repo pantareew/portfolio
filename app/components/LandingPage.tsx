@@ -13,7 +13,33 @@ export default function LandingPage() {
     y: number;
   } | null>(null);
   const [activeContent, setActiveContent] = useState<string | null>(null); //section content that currently shown
-
+  //sections on map
+  const sections = [
+    {
+      name: "About Me",
+      x: window.innerWidth / 2,
+      y: 100,
+      content: "Passion, Curiosity, Creativity",
+    },
+    {
+      name: "Projects",
+      x: 100,
+      y: window.innerHeight / 2,
+      content: "Internships, Projects, Startups",
+    },
+    {
+      name: "Experience",
+      x: window.innerWidth - 100,
+      y: window.innerHeight / 2,
+      content: "Next.js, Python, Web Development",
+    },
+    {
+      name: "Skills",
+      x: 100,
+      y: window.innerHeight - 100,
+      content: "Email, LinkedIn, GitHub",
+    },
+  ];
   if (!loadingFinished) {
     return <LoadingFootprints onFinish={() => setLoadingFinished(true)} />; //set loadingFinished to true when LoadingFootprints calls onFinish
   }

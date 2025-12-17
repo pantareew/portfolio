@@ -14,8 +14,9 @@ export default function WandOverlay({
     onWandMove({ x: e.clientX, y: e.clientY });
   };
   return (
+    //top element on the stack
     <div
-      className="absolute inset-0 z-10 pointer-events-auto" //create overlay and receive mouse movement on overlay
+      className="absolute inset-0 z-10 pointer-events-auto" //create overlay and receive mouse movement on overlay for updating wand position
       onMouseMove={handleMouseMove}
     >
       {/*wand image */}
