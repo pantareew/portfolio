@@ -24,7 +24,7 @@ export default function WandOverlay({
         <img
           src="/assets/wand.png"
           alt="wand"
-          className="absolute w-48 lg:w-64 h-auto pointer-events-none z-30"
+          className="absolute w-64 h-auto pointer-events-none z-30"
           //align tip of wand with cursor
           style={{
             left: wandPosition.x - 50,
