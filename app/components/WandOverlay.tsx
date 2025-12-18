@@ -19,6 +19,15 @@ export default function WandOverlay({
       className="absolute inset-0 z-10 pointer-events-auto" //create overlay and receive mouse movement on overlay for updating wand position
       onMouseMove={handleMouseMove}
     >
+      {/*wand light */}
+      {wandPosition && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle ${radius}px at ${wandPosition.x}px ${wandPosition.y}px, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 200px)`,
+          }}
+        />
+      )}
       {/*wand image */}
       {wandPosition && (
         <img
