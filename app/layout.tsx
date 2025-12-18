@@ -4,6 +4,7 @@ import {
   Geist_Mono,
   Great_Vibes,
   IM_Fell_English,
+  Caveat,
 } from "next/font/google";
 import "./globals.css";
 //fonts
@@ -16,6 +17,11 @@ const greatVibes = Great_Vibes({
 const imFell = IM_Fell_English({
   subsets: ["latin"],
   variable: "--font-map-body",
+  weight: "400",
+});
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-map-instruction",
   weight: "400",
 });
 
@@ -43,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${imFell.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${imFell.variable} ${caveat.variable} antialiased`}
       >
         {children}
       </body>

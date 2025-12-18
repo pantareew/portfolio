@@ -5,6 +5,8 @@ import CastleInstruction from "./CastleInstruction";
 import Castle from "./Castle";
 import MapSections from "./MapSections";
 import WandOverlay from "./WandOverlay";
+import MapInstruction from "./MapInstruction";
+
 interface Section {
   name: string;
   x: number;
@@ -77,7 +79,6 @@ export default function LandingPage() {
           {/*castle and map text */}
           <Castle onClick={() => setMapClicked(true)} />
           {/*instruction box */}
-
           <CastleInstruction text="Click the map to view my journey" />
         </>
       ) : (
@@ -91,13 +92,21 @@ export default function LandingPage() {
             onSectionClick={setActiveContent}
             sections={sections}
           />
-          <div className="absolute inset-0 pointer-events-none">
-            <span
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-               text-[#3b2f1a] text-lg opacity-70 italic animate-pulse-slow"
-            >
-              Point your wand to reveal the path
-            </span>
+          {/*map instruction */}
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <div className="relative">
+              {/* Popup image */}
+              <img
+                src="/assets/popup.png"
+                alt="popup"
+                className="w-64 lg:w-96 h-auto"
+              />
+
+              {/* Text on top of popup */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <MapInstruction />
+              </div>
+            </div>
           </div>
           {/*if section is selected*/}
           {activeContent && (
