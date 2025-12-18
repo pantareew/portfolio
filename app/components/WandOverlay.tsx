@@ -1,5 +1,5 @@
 interface WandOverlayProps {
-  wandPosition: { x: number; y: number } | null;
+  wandPosition: { x: number; y: number };
   onWandMove: (pos: { x: number; y: number }) => void; //function to set wand position
   radius?: number; //size of glowy light
 }
@@ -24,7 +24,7 @@ export default function WandOverlay({
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle ${radius}px at ${wandPosition.x}px ${wandPosition.y}px, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 200px)`,
+            background: `radial-gradient(circle at ${wandPosition.x}px ${wandPosition.y}px, rgba(0,0,0,0) 0px, rgba(0,0,0,0.75) ${radius}px)`,
           }}
         />
       )}
@@ -33,11 +33,12 @@ export default function WandOverlay({
         <img
           src="/assets/wand.png"
           alt="wand"
-          className="absolute w-64 h-auto pointer-events-none z-30"
+          className="absolute w-48  h-auto pointer-events-none z-30"
           //align tip of wand with cursor
           style={{
-            left: wandPosition.x - 50,
-            top: wandPosition.y - 20,
+            left: wandPosition.x,
+            top: wandPosition.y,
+            transform: "translate(-20%, -5%)",
           }}
         />
       )}
