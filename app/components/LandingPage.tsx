@@ -143,9 +143,9 @@ export default function LandingPage() {
           {/*map instruction */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <div className="relative">
-              {/* Popup image */}
+              {/*bg image */}
               <img
-                src="/assets/popup.png"
+                src="/assets/instructionBox.png"
                 alt="popup"
                 className="w-auto h-70"
               />
@@ -158,25 +158,17 @@ export default function LandingPage() {
           </div>
           {/*if section is selected*/}
           {activeSection && (
-            <>
-              <img
-                src="/assets/wand.png"
-                alt="wand"
-                className="absolute w-48 h-auto opacity-50 pointer-events-none"
-                style={{ left: wandPosition.x - 50, top: wandPosition.y - 20 }}
-              />
-              <ContentPopup
-                section={activeSection}
-                pageIndex={pageIndex}
-                onNext={() =>
-                  setPageIndex((i) =>
-                    Math.min(i + 1, activeSection.content.length - 1)
-                  )
-                }
-                onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
-                onExit={() => setActiveSection(null)}
-              />
-            </>
+            <ContentPopup
+              section={activeSection}
+              pageIndex={pageIndex}
+              onNext={() =>
+                setPageIndex((i) =>
+                  Math.min(i + 1, activeSection.content.length - 1)
+                )
+              }
+              onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
+              onExit={() => setActiveSection(null)}
+            />
           )}
         </div>
       )}

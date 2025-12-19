@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from "framer-motion";
 interface SectionContent {
   text: string;
   image?: string;
@@ -26,25 +27,42 @@ export default function ContentPopup({
   const page = section.content[pageIndex];
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      {/*background of popup */}
+      {/*background */}
       <div
-        className="relative w-11/12 max-w-4xl h-5/6 rounded-lg shadow-xl p-6 overflow-auto flex flex-col"
-        style={{
-          backgroundImage: `url('/assets/popup.png')`,
-          backgroundSize: "full",
-          backgroundPosition: "center",
-        }}
+        className="
+        relative w-11/12 max-w-4xl h-5/6  
+        overflow-auto flex flex-col
+        backdrop-blur-xl bg-[#f6e7c8]/60
+        border border-[#d8c59a]/20
+        shadow-[0_0_40px_rgba(210,180,80,0.25)]
+        rounded-2xl p-8
+        shadow-2xl
+        "
       >
-        {/*display section content */}
         <h2 className="text-3xl font-bold mb-4">{section.name}</h2>
-        {page.image && (
-          <img
-            src={page.image}
-            alt={section.name}
-            className="w-full max-h-96 object-contain mb-6"
-          />
-        )}
-        <p>{page.text}</p>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={pageIndex}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {/* display section content */}
+
+            {page.image && (
+              <img
+                src={page.image}
+                alt={section.name}
+                className="w-full max-h-96 object-contain mb-6"
+              />
+            )}
+
+            <p>{page.text}</p>
+          </motion.div>
+        </AnimatePresence>
+
         {/*nav buttons */}
         <div className="flex justify-between mt-4">
           <button
