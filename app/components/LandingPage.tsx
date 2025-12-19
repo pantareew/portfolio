@@ -6,13 +6,18 @@ import Castle from "./Castle";
 import MapSections from "./MapSections";
 import WandOverlay from "./WandOverlay";
 import MapInstruction from "./MapInstruction";
+import ContentPopup from "./ContentPopup";
 
 interface Section {
   name: string;
   x: number;
   y: number;
-  content: string;
+  content: {
+    text: string;
+    image?: string;
+  }[];
 }
+
 export default function LandingPage() {
   const [loadingFinished, setLoadingFinished] = useState(false); //for loading footprints
   const [mapClicked, setMapClicked] = useState(false); //clicking castle
@@ -21,8 +26,9 @@ export default function LandingPage() {
     x: typeof window !== "undefined" ? window.innerWidth / 2 : 0, //set position to 0,0 if window not exist during server
     y: typeof window !== "undefined" ? window.innerHeight / 2 : 0,
   });
-  const [activeContent, setActiveContent] = useState<string | null>(null); //section content that currently active
+  const [activeSection, setActiveSection] = useState<Section | null>(null); //section content that currently opened
   const [sections, setSections] = useState<Section[]>([]); //for rendering all sections
+  const [pageIndex, setPageIndex] = useState(0); //index of content section page
   //set sectons after component mount since window not available on server
   useEffect(() => {
     //calculate screen size and sections positions
@@ -35,21 +41,54 @@ export default function LandingPage() {
           name: "About Me",
           x: w - 150,
           y: 120,
-          content: "Passion, Curiosity, Creativity",
+          content: [
+            { text: "Hi! I'm Pantaree, a curious and creative developer." },
+            {
+              text: "I love exploring new technologies and building interactive projects.",
+            },
+          ],
         },
         {
           name: "Experience",
           x: 150,
           y: h - 120,
-          content: "Internships, Projects, Startups",
+          content: [
+            {
+              text: "Built a trading platform integrating web3 wallets.",
+              image: "/assets/projects/trading-platform.png",
+            },
+            {
+              text: "Worked on multiple full-stack web apps with React and Next.js.",
+              image: "/assets/projects/fullstack-app.png",
+            },
+          ],
         },
         {
           name: "Projects",
           x: w - 150,
           y: h - 120,
-          content: "Next.js, Python, Web Development",
+          content: [
+            {
+              text: "Built a trading platform integrating web3 wallets.",
+              image: "/assets/projects/trading-platform.png",
+            },
+            {
+              text: "Worked on multiple full-stack web apps with React and Next.js.",
+              image: "/assets/projects/fullstack-app.png",
+            },
+          ],
         },
-        { name: "Skills", x: 150, y: 120, content: "Email, LinkedIn, GitHub" },
+        {
+          name: "Skills",
+          x: 150,
+          y: 120,
+          content: [
+            { text: "Hi! I'm Pantaree, a curious and creative developer." },
+            {
+              text: "I love exploring new technologies and building interactive projects.",
+            },
+          ],
+        },
       ];
     };
 
@@ -83,15 +122,24 @@ export default function LandingPage() {
         </>
       ) : (
         <div className="relative w-full h-screen overflow-hidden">
-          <WandOverlay
-            wandPosition={wandPosition}
-            onWandMove={setWandPosition}
-          />
-          <MapSections
-            wandPosition={wandPosition}
-            onSectionClick={setActiveContent}
-            sections={sections}
-          />
+          {/*no wand overlay when content popup is active */}
+          {!activeSection && (
+            <WandOverlay
+              wandPosition={wandPosition}
+              onWandMove={setWandPosition}
+            />
+          )}
+          {/*map sections are clickable only if no content group */}
+          {!activeSection && (
+            <MapSections
+              wandPosition={wandPosition}
+              onSectionClick={(section) => {
+                setActiveSection(section);
+                setPageIndex(0); // reset page index when opening section
+              }}
+              sections={sections}
+            />
+          )}
           {/*map instruction */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <div className="relative">
@@ -109,10 +157,26 @@ export default function LandingPage() {
             </div>
           </div>
           {/*if section is selected*/}
-          {activeContent && (
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 bg-yellow-100 p-6 rounded-lg shadow-lg text-[#3b2f1a] text-lg">
-              {activeContent}
-            </div>
+          {activeSection && (
+            <>
+              <img
+                src="/assets/wand.png"
+                alt="wand"
+                className="absolute w-48 h-auto opacity-50 pointer-events-none"
+                style={{ left: wandPosition.x - 50, top: wandPosition.y - 20 }}
+              />
+              <ContentPopup
+                section={activeSection}
+                pageIndex={pageIndex}
+                onNext={() =>
+                  setPageIndex((i) =>
+                    Math.min(i + 1, activeSection.content.length - 1)
+                  )
+                }
+                onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
+                onExit={() => setActiveSection(null)}
+              />
+            </>
           )}
         </div>
       )}

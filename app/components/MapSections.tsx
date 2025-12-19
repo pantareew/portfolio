@@ -1,13 +1,17 @@
+interface SectionContent {
+  text: string;
+  image?: string;
+}
 interface Section {
   name: string;
   x: number; //percentage of screen width for position x
   y: number; //percentage of screen height for position y
-  content: string;
+  content: SectionContent[];
 }
 interface MapSectionsProps {
   wandPosition: { x: number; y: number };
   sections: Section[];
-  onSectionClick: (content: string) => void;
+  onSectionClick: (section: Section) => void;
 }
 export default function MapSections({
   wandPosition,
@@ -33,7 +37,9 @@ export default function MapSections({
               top: section.y,
               transform: "translate(-50%, -50%)",
             }}
-            onClick={() => isActive && onSectionClick(section.content)}
+            onClick={() => {
+              if (isActive) onSectionClick(section); //pass the whole section
+            }}
           >
             <div
               className={`font-bold text-xl map-title transition-all duration-300 ${
