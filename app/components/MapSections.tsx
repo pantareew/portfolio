@@ -25,20 +25,30 @@ export default function MapSections({
         const distance = Math.sqrt(dx * dx + dy * dy);
         const isActive = distance <= revealRadius;
         return (
-          <span
+          <div
             key={section.name}
-            className="absolute font-bold text-[#3b2f1a] cursor-pointer select-none pointer-events-auto transition-opacity duration-200"
+            className="absolute cursor-pointer select-none pointer-events-auto "
             style={{
               left: section.x,
               top: section.y,
               transform: "translate(-50%, -50%)",
-              opacity: isActive ? 1 : 0.25, //show section name only within reveal radius
-              textShadow: "1px 1px 0 rgba(255,255,255,0.3)",
             }}
             onClick={() => isActive && onSectionClick(section.content)}
           >
-            {section.name}
-          </span>
+            <div
+              className={`font-bold text-xl map-title transition-all duration-300 ${
+                isActive ? "scale-105 opacity-100" : "scale-100 opacity-30"
+              }`}
+            >
+              {section.name.toLocaleUpperCase()}
+            </div>
+            {/*click to view section details */}
+            {isActive && (
+              <div className="mt-1 text-sm italic text-[#3b2f1a]/70 animate-pulse">
+                Click to view details
+              </div>
+            )}
+          </div>
         );
       })}
     </div>

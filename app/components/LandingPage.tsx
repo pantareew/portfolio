@@ -38,13 +38,13 @@ export default function LandingPage() {
           content: "Passion, Curiosity, Creativity",
         },
         {
-          name: "Projects",
+          name: "Experience",
           x: 150,
           y: h - 120,
           content: "Internships, Projects, Startups",
         },
         {
-          name: "Experience",
+          name: "Projects",
           x: w - 150,
           y: h - 120,
           content: "Next.js, Python, Web Development",
@@ -99,7 +99,7 @@ export default function LandingPage() {
               <img
                 src="/assets/popup.png"
                 alt="popup"
-                className="w-64 lg:w-96 h-auto"
+                className="w-auto h-70"
               />
 
               {/* Text on top of popup */}
