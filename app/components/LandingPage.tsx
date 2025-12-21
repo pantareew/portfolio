@@ -37,18 +37,23 @@ export default function LandingPage() {
     x: number;
     y: number;
   } | null>(null); //destination of footprint
+
   //set sectons after component mount since window not available on server
   useEffect(() => {
     //calculate screen size and sections positions
     const calculateSections = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-
+      //tailwind breakpoints: sm-640px
+      const isMobile = w < 640;
+      //padding from edges based on screen size
+      const paddingX = isMobile ? 100 : 150;
+      const paddingY = isMobile ? 100 : 120;
       return [
         {
           name: "About Me",
-          x: w - 150,
-          y: 120,
+          x: w - paddingX,
+          y: paddingY,
           content: [
             { text: "Hi! I'm Pantaree, a curious and creative developer." },
             {
@@ -58,8 +63,8 @@ export default function LandingPage() {
         },
         {
           name: "Experience",
-          x: 150,
-          y: h - 120,
+          x: paddingX,
+          y: h - paddingY,
           content: [
             {
               text: "Built a trading platform integrating web3 wallets.",
@@ -73,8 +78,8 @@ export default function LandingPage() {
         },
         {
           name: "Projects",
-          x: w - 150,
-          y: h - 120,
+          x: w - paddingX,
+          y: h - paddingY,
           content: [
             {
               text: "Built a trading platform integrating web3 wallets.",
@@ -88,8 +93,8 @@ export default function LandingPage() {
         },
         {
           name: "Skills",
-          x: 150,
-          y: 120,
+          x: paddingX,
+          y: paddingY,
           content: [
             { text: "Hi! I'm Pantaree, a curious and creative developer." },
             {
@@ -130,79 +135,95 @@ export default function LandingPage() {
         </>
       ) : (
         <div className="relative w-full h-screen overflow-hidden">
-          {/*no wand overlay when content popup is active */}
-          {!activeSection && !isMobile && (
-            <WandOverlay
-              wandPosition={wandPosition}
-              onWandMove={setWandPosition}
-            />
-          )}
-          {/*map sections are clickable only if no content group */}
-          {!activeSection && (
-            <MapSections
-              wandPosition={wandPosition}
-              onSectionClick={(section) => {
-                setActiveSection(section);
-                setPageIndex(0); // reset page index when opening section
-              }}
-              sections={sections}
-            />
-          )}
-          {/*map instruction */}
+          {/*wand mode */}
           {!isMobile && (
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <div className="relative">
-                {/*bg image */}
-                <img
-                  src="/assets/instructionBox.png"
-                  alt="popup"
-                  className="w-auto h-70"
+            <>
+              {/*no wand overlay when content popup is active */}
+              {!activeSection && (
+                <WandOverlay
+                  wandPosition={wandPosition}
+                  onWandMove={setWandPosition}
                 />
+              )}
+              {/*map sections are clickable only if no content group */}
+              {!activeSection && (
+                <MapSections
+                  wandPosition={wandPosition}
+                  onSectionClick={(section) => {
+                    setActiveSection(section);
+                    setPageIndex(0); // reset page index when opening section
+                  }}
+                  sections={sections}
+                />
+              )}
+              {/*map instruction */}
 
-                {/* Text on top of popup */}
-                <div className="absolute inset-0 flex items-center justify-center text-center">
-                  <MapInstruction
-                    words={[
-                      "Instructions\nPoint your wand to:\nTOP LEFT to reveal SKILLS\nTOP RIGHT to reveal ABOUT ME\nBOTTOM LEFT to reveal EXPERIENCE\nBOTTOM RIGHT to reveal PROJECTS",
-                    ]}
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                <div className="relative">
+                  {/*bg image */}
+                  <img
+                    src="/assets/instructionBox.png"
+                    alt="popup"
+                    className="w-auto h-70"
                   />
+
+                  {/* Text on top of popup */}
+                  <div className="absolute inset-0 flex items-center justify-center text-center">
+                    <MapInstruction
+                      words={[
+                        "Instructions\nPoint your wand to:\nTOP LEFT to reveal SKILLS\nTOP RIGHT to reveal ABOUT ME\nBOTTOM LEFT to reveal EXPERIENCE\nBOTTOM RIGHT to reveal PROJECTS",
+                      ]}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          {/*if section is selected*/}
-          {activeSection && (
-            <ContentPopup
-              section={activeSection}
-              pageIndex={pageIndex}
-              onNext={() =>
-                setPageIndex((i) =>
-                  Math.min(i + 1, activeSection.content.length - 1)
-                )
-              }
-              onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
-              onExit={() => setActiveSection(null)}
-            />
+              {/*if section is selected*/}
+              {activeSection && (
+                <ContentPopup
+                  section={activeSection}
+                  pageIndex={pageIndex}
+                  onNext={() =>
+                    setPageIndex((i) =>
+                      Math.min(i + 1, activeSection.content.length - 1)
+                    )
+                  }
+                  onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
+                  onExit={() => setActiveSection(null)}
+                />
+              )}
+            </>
           )}
           {/*mobile view */}
           {isMobile && (
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <div className="relative flex justify-center">
-                {/*bg image */}
-                <img
-                  src="/assets/instructionBox.png"
-                  alt="popup"
-                  className="w-3/4 max-w-sm h-auto"
-                />
-                <div className="absolute inset-0 flex items-center justify-center text-center">
-                  <MapInstruction
-                    words={[
-                      "Instructions\nTap a section to view details\nFootprints will guide you there",
-                    ]}
+            <>
+              {/*instruction box */}
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                <div className="relative flex justify-center">
+                  {/*bg image */}
+                  <img
+                    src="/assets/instructionBox.png"
+                    alt="popup"
+                    className="w-3/4 max-w-sm h-auto"
                   />
+                  <div className="absolute inset-0 flex items-center justify-center text-center">
+                    <MapInstruction
+                      words={[
+                        "Instructions\nTap a section to view details\nFootprints will guide you there",
+                      ]}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+              {/*map sections */}
+              <MapSections
+                sections={sections}
+                onSectionClick={(section) => {
+                  setActiveSection(section);
+                  setPageIndex(0); // reset page index when opening section
+                }}
+                showAllSections={true}
+              />
+            </>
           )}
         </div>
       )}

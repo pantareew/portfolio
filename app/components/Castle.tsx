@@ -11,7 +11,7 @@ export default function Castle({ onClick }: CastleProps) {
       />
       <h2
         onClick={onClick}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4 -mt-3 map-name text-[1rem] sm:text-[1.2rem] lg:text-[1.3rem] font-semibold cursor-pointer animate-pulse"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4 -mt-2 sm:-mt-3 map-name text-[1rem] sm:text-[1.2rem] lg:text-[1.3rem] font-semibold cursor-pointer animate-pulse"
       >
         Pantaree's <br /> Magical Map
       </h2>

@@ -9,14 +9,16 @@ interface Section {
   content: SectionContent[];
 }
 interface MapSectionsProps {
-  wandPosition: { x: number; y: number };
+  wandPosition?: { x: number; y: number };
   sections: Section[];
   onSectionClick: (section: Section) => void;
+  showAllSections?: boolean; //show all sections without wand
 }
 export default function MapSections({
   wandPosition,
   sections,
   onSectionClick,
+  showAllSections = false,
 }: MapSectionsProps) {
   const revealRadius = 150; //wand light area
   return (
@@ -24,10 +26,19 @@ export default function MapSections({
     <div className="absolute inset-0 z-20 pointer-events-none">
       {/*render sections */}
       {sections.map((section) => {
-        const dx = wandPosition.x - section.x;
-        const dy = wandPosition.y - section.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const isActive = distance <= revealRadius;
+        {
+          /*showAllSections = all sections are active */
+        }
+        let isActive = showAllSections;
+        {
+          /*use wand to reveal section */
+        }
+        if (!showAllSections && wandPosition) {
+          const dx = wandPosition.x - section.x;
+          const dy = wandPosition.y - section.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          isActive = distance <= revealRadius; //section that is active
+        }
         return (
           <div
             key={section.name}
