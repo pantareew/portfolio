@@ -104,8 +104,16 @@ export default function LandingPage() {
         },
       ];
     };
-
+    //initial calculation
     setSections(calculateSections());
+    //handle window resize
+    const handleResize = () => {
+      setSections(calculateSections());
+    };
+    window.addEventListener("resize", handleResize); //call handleResize() if screen resize
+    return () => {
+      window.removeEventListener("resize", handleResize); //remove eventlistener
+    };
   }, []);
 
   if (!loadingFinished) {
@@ -177,20 +185,6 @@ export default function LandingPage() {
                   </div>
                 </div>
               </div>
-              {/*if section is selected*/}
-              {activeSection && (
-                <ContentPopup
-                  section={activeSection}
-                  pageIndex={pageIndex}
-                  onNext={() =>
-                    setPageIndex((i) =>
-                      Math.min(i + 1, activeSection.content.length - 1)
-                    )
-                  }
-                  onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
-                  onExit={() => setActiveSection(null)}
-                />
-              )}
             </>
           )}
           {/*mobile view */}
@@ -208,7 +202,7 @@ export default function LandingPage() {
                   <div className="absolute inset-0 flex items-center justify-center text-center">
                     <MapInstruction
                       words={[
-                        "Instructions\nTap a section to view details\nFootprints will guide you there",
+                        "Instructions\nTap a section to view details\nFootprints will take you there",
                       ]}
                     />
                   </div>
@@ -224,6 +218,20 @@ export default function LandingPage() {
                 showAllSections={true}
               />
             </>
+          )}
+          {/*show content popup for selected section*/}
+          {activeSection && (
+            <ContentPopup
+              section={activeSection}
+              pageIndex={pageIndex}
+              onNext={() =>
+                setPageIndex((i) =>
+                  Math.min(i + 1, activeSection.content.length - 1)
+                )
+              }
+              onPrev={() => setPageIndex((i) => Math.max(i - 1, 0))}
+              onExit={() => setActiveSection(null)}
+            />
           )}
         </div>
       )}

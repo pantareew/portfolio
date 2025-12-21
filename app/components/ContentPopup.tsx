@@ -30,7 +30,7 @@ export default function ContentPopup({
       {/*background */}
       <div
         className="
-        relative w-11/12 max-w-4xl h-5/6  
+        relative w-11/12 max-w-4xl h-auto 
         overflow-auto flex flex-col
         backdrop-blur-xl bg-[#f6e7c8]/60
         border border-[#d8c59a]/20
