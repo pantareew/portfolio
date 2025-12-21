@@ -44,13 +44,12 @@ export default function ContentPopup({
         <AnimatePresence mode="wait">
           <motion.div
             key={pageIndex}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, rotateY: -10, x: 40 }}
+            animate={{ opacity: 1, rotateY: 0, x: 0 }}
+            exit={{ opacity: 0, rotateY: 10, x: -40 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             {/* display section content */}
-
             {page.image && (
               <img
                 src={page.image}

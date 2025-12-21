@@ -29,6 +29,7 @@ export default function LandingPage() {
   const [activeSection, setActiveSection] = useState<Section | null>(null); //section content that currently opened
   const [sections, setSections] = useState<Section[]>([]); //for rendering all sections
   const [pageIndex, setPageIndex] = useState(0); //index of content section page
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768; //check if app is opened on mobile
   //set sectons after component mount since window not available on server
   useEffect(() => {
     //calculate screen size and sections positions
@@ -122,6 +123,8 @@ export default function LandingPage() {
         </>
       ) : (
         <div className="relative w-full h-screen overflow-hidden">
+          {/*render footprint for mobile */}
+
           {/*no wand overlay when content popup is active */}
           {!activeSection && (
             <WandOverlay
