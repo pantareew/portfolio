@@ -30,7 +30,7 @@ export default function LandingPage() {
   const [sections, setSections] = useState<Section[]>([]); //for rendering all sections
   const [pageIndex, setPageIndex] = useState(0); //index of content section page
   //mobile mode
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768; //check if app is opened on mobile
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640; //check if app is opened on mobile
   const [footprintActive, setFootprintActive] = useState(false); //if footprint is currently animating
   const [footprintFrom, setFootprintFrom] = useState({ x: 0, y: 0 }); //start position of footprint
   const [footprintTo, setFootprintTo] = useState<{
@@ -130,10 +130,8 @@ export default function LandingPage() {
         </>
       ) : (
         <div className="relative w-full h-screen overflow-hidden">
-          {/*render footprint for mobile */}
-
           {/*no wand overlay when content popup is active */}
-          {!activeSection && (
+          {!activeSection && !isMobile && (
             <WandOverlay
               wandPosition={wandPosition}
               onWandMove={setWandPosition}
@@ -151,30 +149,27 @@ export default function LandingPage() {
             />
           )}
           {/*map instruction */}
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <div className="relative">
-              {/*bg image */}
-              <img
-                src="/assets/instructionBox.png"
-                alt="popup"
-                className="w-auto h-70"
-              />
-
-              {/* Text on top of popup */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <MapInstruction
-                  words={[
-                    "Instructions",
-                    `Point your wand to:
-            TOP LEFT to reveal SKILLS
-            TOP RIGHT to reveal ABOUT ME
-            BOTTOM LEFT to reveal EXPERIENCE
-            BOTTOM RIGHT to reveal PROJECTS`,
-                  ]}
+          {!isMobile && (
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div className="relative">
+                {/*bg image */}
+                <img
+                  src="/assets/instructionBox.png"
+                  alt="popup"
+                  className="w-auto h-70"
                 />
+
+                {/* Text on top of popup */}
+                <div className="absolute inset-0 flex items-center justify-center text-center">
+                  <MapInstruction
+                    words={[
+                      "Instructions\nPoint your wand to:\nTOP LEFT to reveal SKILLS\nTOP RIGHT to reveal ABOUT ME\nBOTTOM LEFT to reveal EXPERIENCE\nBOTTOM RIGHT to reveal PROJECTS",
+                    ]}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
           {/*if section is selected*/}
           {activeSection && (
             <ContentPopup
@@ -190,7 +185,25 @@ export default function LandingPage() {
             />
           )}
           {/*mobile view */}
-          {isMobile}
+          {isMobile && (
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div className="relative flex justify-center">
+                {/*bg image */}
+                <img
+                  src="/assets/instructionBox.png"
+                  alt="popup"
+                  className="w-3/4 max-w-sm h-auto"
+                />
+                <div className="absolute inset-0 flex items-center justify-center text-center">
+                  <MapInstruction
+                    words={[
+                      "Instructions\nTap a section to view details\nFootprints will guide you there",
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
