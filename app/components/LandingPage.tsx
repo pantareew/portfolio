@@ -29,7 +29,14 @@ export default function LandingPage() {
   const [activeSection, setActiveSection] = useState<Section | null>(null); //section content that currently opened
   const [sections, setSections] = useState<Section[]>([]); //for rendering all sections
   const [pageIndex, setPageIndex] = useState(0); //index of content section page
+  //mobile mode
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768; //check if app is opened on mobile
+  const [footprintActive, setFootprintActive] = useState(false); //if footprint is currently animating
+  const [footprintFrom, setFootprintFrom] = useState({ x: 0, y: 0 }); //start position of footprint
+  const [footprintTo, setFootprintTo] = useState<{
+    x: number;
+    y: number;
+  } | null>(null); //destination of footprint
   //set sectons after component mount since window not available on server
   useEffect(() => {
     //calculate screen size and sections positions
@@ -155,7 +162,16 @@ export default function LandingPage() {
 
               {/* Text on top of popup */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <MapInstruction />
+                <MapInstruction
+                  words={[
+                    "Instructions",
+                    `Point your wand to:
+            TOP LEFT to reveal SKILLS
+            TOP RIGHT to reveal ABOUT ME
+            BOTTOM LEFT to reveal EXPERIENCE
+            BOTTOM RIGHT to reveal PROJECTS`,
+                  ]}
+                />
               </div>
             </div>
           </div>
@@ -173,6 +189,8 @@ export default function LandingPage() {
               onExit={() => setActiveSection(null)}
             />
           )}
+          {/*mobile view */}
+          {isMobile}
         </div>
       )}
     </div>
