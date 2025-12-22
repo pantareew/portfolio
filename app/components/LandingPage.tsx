@@ -28,6 +28,8 @@ export default function LandingPage() {
     x: typeof window !== "undefined" ? window.innerWidth / 2 : 0, //set position to 0,0 if window not exist during server
     y: typeof window !== "undefined" ? window.innerHeight / 2 : 0,
   });
+
+  //sections and content popup
   const [activeSection, setActiveSection] = useState<Section | null>(null); //section content that currently opened
   const [sections, setSections] = useState<Section[]>([]); //for rendering all sections
   const [pageIndex, setPageIndex] = useState(0); //index of content section page
@@ -39,6 +41,11 @@ export default function LandingPage() {
     x: number;
     y: number;
   } | null>(null); //destination position of footprint
+  //instruction box position for footprint start point
+  const [instructionBoxPosition, setInstructionBoxPosition] = useState({
+    x: 0,
+    y: 0,
+  });
   const [navMode, setNavMode] = useState<NavMode>("wand"); //navigation mode - default mode is wand
   //force mobile to footprint mode
   useEffect(() => {
@@ -47,11 +54,18 @@ export default function LandingPage() {
     }
   }, [isMobile]);
 
-  //start position of footprint (instruction box position)
-  const instructionBoxPosition = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  };
+  //update instruction box position
+  useEffect(() => {
+    const updatePosition = () => {
+      setInstructionBoxPosition({
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+      });
+    };
+    updatePosition(); //initial position
+    window.addEventListener("resize", updatePosition); //call updateposition() if screen changes
+    return () => window.removeEventListener("resize", updatePosition);
+  }, []);
 
   //set sectons after component mount since window not available on server
   useEffect(() => {
