@@ -5,6 +5,8 @@ import {
   Great_Vibes,
   IM_Fell_English,
   Lumanosimo,
+  Dancing_Script,
+  Cormorant,
 } from "next/font/google";
 import "./globals.css";
 //fonts
@@ -24,7 +26,16 @@ const luman = Lumanosimo({
   variable: "--font-map-instruction",
   weight: "400",
 });
-
+const dancing = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-castle-instruction",
+  weight: "400",
+});
+const cormorant = Cormorant({
+  subsets: ["latin"],
+  variable: "--font-map-content",
+  weight: "400",
+});
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -49,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${imFell.variable} ${luman.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${imFell.variable} ${luman.variable} ${dancing.variable} ${cormorant.variable} antialiased`}
       >
         {children}
       </body>

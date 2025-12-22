@@ -26,39 +26,41 @@ export default function ContentPopup({
 }: ContentPopup) {
   const page = section.content[pageIndex];
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 map-content">
       {/*background */}
       <div
         className="
         relative w-11/12 max-w-4xl h-auto 
         overflow-auto flex flex-col
-        backdrop-blur-xl bg-[#f6e7c8]/60
+        backdrop-blur-xl bg-[#f6e7c8]/70
         border border-[#d8c59a]/20
         shadow-[0_0_40px_rgba(210,180,80,0.25)]
         rounded-2xl p-8
         shadow-2xl
         "
       >
-        <h2 className="text-3xl font-bold mb-4">{section.name}</h2>
+        <h2 className="text-3xl font-bold mb-4 tracking-wide text-center">
+          {section.name.toLocaleUpperCase()}
+        </h2>
 
         <AnimatePresence mode="wait">
           <motion.div
             key={pageIndex}
-            initial={{ opacity: 0, rotateY: -10, x: 40 }}
+            initial={{ opacity: 0, rotateY: -20, x: 80 }}
             animate={{ opacity: 1, rotateY: 0, x: 0 }}
-            exit={{ opacity: 0, rotateY: 10, x: -40 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            exit={{ opacity: 0, rotateY: 20, x: -80 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            style={{ transformOrigin: "left center" }}
           >
             {/* display section content */}
             {page.image && (
               <img
                 src={page.image}
                 alt={section.name}
-                className="w-full max-h-96 object-contain mb-6"
+                className="w-full max-h-80 object-contain mb-6 rounded-md shadow-md border border-[#c2a96b]/40 bg-white/40 p-2"
               />
             )}
-
-            <p>{page.text}</p>
+            <p className="text-lg leading-relaxed">{page.text}</p>
           </motion.div>
         </AnimatePresence>
 
@@ -67,26 +69,37 @@ export default function ContentPopup({
           <button
             onClick={onPrev}
             disabled={pageIndex === 0}
-            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+            className="px-6 py-2 rounded-full bg-[#8b6b3f] text-[#fdf6e3]
+        font-semibold
+        hover:bg-[#7a5d36]
+        transition
+        disabled:opacity-40
+        tracking-wide"
           >
-            Previous
+            Previous Page
           </button>
           <button
             onClick={onNext}
             disabled={pageIndex === section.content.length - 1}
-            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+            className="
+        px-6 py-2 rounded-full bg-[#8b6b3f] text-[#fdf6e3]
+        font-semibold
+        hover:bg-[#7a5d36]
+        transition
+        disabled:opacity-40
+        tracking-wide"
           >
-            Next
+            Next Page
           </button>
           <button
             onClick={onExit}
-            className="px-4 py-2 bg-red-400 text-white rounded"
+            className="px-4 py-2 rounded-full text-white bg-[#a2833c] text-[#3b2f1a] hover:bg-[#b89645] tracking-wide"
           >
-            Exit
+            Close
           </button>
         </div>
         {/*current page */}
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-2 text-sm text-[#695332]">
           Page {pageIndex + 1} / {section.content.length}
         </p>
       </div>

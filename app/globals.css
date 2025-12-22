@@ -37,3 +37,8 @@ button {
   font-family: var(--font-map-instruction);
   color: #3b2f1a;
 }
+
+.map-content {
+  font-family: var(--font-map-content);
+  color: #3b2f1a;
+}

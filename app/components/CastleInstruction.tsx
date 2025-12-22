@@ -18,8 +18,8 @@ export default function CastleInstruction({ text }: CastleInstructionProps) {
         <path id="ribbonPath" d="M 12 70 Q 300 60 480 10" fill="transparent" />
         <text
           fill="#3b2f1a"
-          fontSize="16"
-          fontFamily="var(--font-map-body)"
+          fontSize="18"
+          fontFamily="var(--font-castle-instruction)"
           textAnchor="middle"
           fontWeight={600}
         >

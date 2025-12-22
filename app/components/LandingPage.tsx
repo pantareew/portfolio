@@ -116,7 +116,7 @@ export default function LandingPage() {
             },
             {
               text: "Worked on multiple full-stack web apps with React and Next.js.",
-              image: "/assets/projects/fullstack-app.png",
+              image: "/assets/instructionBox.png",
             },
           ],
         },
