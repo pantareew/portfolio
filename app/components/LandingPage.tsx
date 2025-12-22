@@ -9,6 +9,7 @@ import MapInstruction from "./MapInstruction";
 import ContentPopup from "./ContentPopup";
 import FootprintNav from "./FootprintNav";
 
+type NavMode = "wand" | "footprint";
 interface Section {
   name: string;
   x: number;
@@ -38,6 +39,14 @@ export default function LandingPage() {
     x: number;
     y: number;
   } | null>(null); //destination position of footprint
+  const [navMode, setNavMode] = useState<NavMode>("wand"); //navigation mode - default mode is wand
+  //force mobile to footprint mode
+  useEffect(() => {
+    if (isMobile) {
+      setNavMode("footprint");
+    }
+  }, [isMobile]);
+
   //start position of footprint (instruction box position)
   const instructionBoxPosition = {
     x: window.innerWidth / 2,
@@ -57,7 +66,7 @@ export default function LandingPage() {
       const paddingY = isMobile ? 100 : 120;
       return [
         {
-          name: "About Me",
+          name: "Experience",
           x: w - paddingX,
           y: paddingY,
           content: [
@@ -68,7 +77,7 @@ export default function LandingPage() {
           ],
         },
         {
-          name: "Experience",
+          name: "Skills",
           x: paddingX,
           y: h - paddingY,
           content: [
@@ -98,7 +107,7 @@ export default function LandingPage() {
           ],
         },
         {
-          name: "Skills",
+          name: "About Me",
           x: paddingX,
           y: paddingY,
           content: [
@@ -121,6 +130,19 @@ export default function LandingPage() {
       window.removeEventListener("resize", handleResize); //remove eventlistener
     };
   }, []);
+  //handle section click for map sections
+  const handleSectionClick = (section: Section) => {
+    if (navMode === "footprint") {
+      if (footprintActive) return; //not allow clicking section if footprint is moving
+      setSelectedSection(section);
+      setFootprintTo({ x: section.x, y: section.y });
+      setFootprintActive(true);
+    } else {
+      //wand mode
+      setActiveSection(section);
+      setPageIndex(0);
+    }
+  };
 
   if (!loadingFinished) {
     return <LoadingFootprints onFinish={() => setLoadingFinished(true)} />; //set loadingFinished to true when LoadingFootprints calls onFinish
@@ -149,82 +171,69 @@ export default function LandingPage() {
         </>
       ) : (
         <div className="relative w-full h-screen overflow-hidden">
-          {/*wand mode */}
+          {/*desktop mode */}
           {!isMobile && (
             <>
-              {/*no wand overlay when content popup is active */}
-              {!activeSection && (
+              {/*Reveal All button for desktop*/}
+              <button
+                onClick={() =>
+                  setNavMode((prev) => (prev === "wand" ? "footprint" : "wand"))
+                }
+                className={`absolute top-10 left-1/2 -translate-x-1/2 z-50 px-4 py-2
+               rounded-full text-sm font-semibold
+               ${navMode === "wand" ? "text-[#3b2f1a]" : "text-[#f6e7c8]"} 
+               ${
+                 navMode === "wand" ? "bg-[#f6e7c8]/50" : "bg-[#3b2f1a]/50"
+               } backdrop-blur
+               hover:scale-105 transition`}
+              >
+                {navMode === "wand" ? "Reveal All" : "Magic Mode"}
+              </button>
+              {/*wand overlay applies to wand navmode and when no content popup show*/}
+              {navMode === "wand" && !activeSection && (
                 <WandOverlay
                   wandPosition={wandPosition}
                   onWandMove={setWandPosition}
                 />
               )}
-              {/*map sections are clickable only if no content group */}
-              {!activeSection && (
-                <MapSections
-                  wandPosition={wandPosition}
-                  onSectionClick={(section) => {
-                    setActiveSection(section);
-                    setPageIndex(0); // reset page index when opening section
-                  }}
-                  sections={sections}
-                />
-              )}
-              {/*map instruction */}
-
-              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <div className="relative">
-                  {/*bg image */}
-                  <img
-                    src="/assets/instructionBox.png"
-                    alt="popup"
-                    className="w-auto h-70"
-                  />
-
-                  {/* Text on top of popup */}
-                  <div className="absolute inset-0 flex items-center justify-center text-center">
-                    <MapInstruction
-                      words={[
-                        "Reveal the Map\nPoint your wand to the corners of the map:\nTop Left: Skills\nTop Right: About Me\nBottom Left: Experience\nBottom Right: Projects",
-                      ]}
-                    />
-                  </div>
-                </div>
-              </div>
             </>
           )}
-          {/*mobile view */}
-          {isMobile && (
-            <>
-              {/*instruction box */}
-              <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <div className="relative flex justify-center">
-                  {/*bg image */}
-                  <img
-                    src="/assets/instructionBox.png"
-                    alt="popup"
-                    className="w-3/4 max-w-sm h-auto"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center text-center">
-                    <MapInstruction
-                      words={[
-                        "Explore the Map\nTap a section to reveal its story\nFootprints will guide your path\nLet’s dive into my world!",
-                      ]}
-                    />
-                  </div>
-                </div>
-              </div>
-              {/*map sections */}
-              <MapSections
-                sections={sections}
-                onSectionClick={(section) => {
-                  if (footprintActive) return; //disable footprint if content popup is currently rendering
-                  setSelectedSection(section); //destination section
-                  setFootprintTo({ x: section.x, y: section.y }); //position of destination
-                  setFootprintActive(true); //start moving footprint
-                }}
-                showAllSections={true}
+          {/*map instruction */}
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+            <div className="relative flex justify-center">
+              {/*bg image */}
+              <img
+                src="/assets/instructionBox.png"
+                alt="popup"
+                className={isMobile ? "w-3/4 max-w-sm h-auto" : "w-auto h-70"}
               />
+              {/*text on top of background */}
+              <div className="absolute inset-0 flex items-center justify-center text-center">
+                <MapInstruction
+                  key={navMode} //remount component when mode changes
+                  words={
+                    navMode === "wand"
+                      ? [
+                          "Reveal the Map\nPoint your wand to the corners of the map:\nTop Left: Skills\nTop Right: About Me\nBottom Left: Experience\nBottom Right: Projects",
+                        ]
+                      : [
+                          "Explore the Map\nTap a section to reveal its story\nFootprints will guide your path\nLet’s dive into my world!",
+                        ]
+                  }
+                />
+              </div>
+            </div>
+          </div>
+          {/*map sections */}
+          <MapSections
+            sections={sections}
+            wandPosition={navMode === "wand" ? wandPosition : undefined}
+            showAllSections={navMode === "footprint"}
+            onSectionClick={handleSectionClick}
+          />
+          {/*mobile mode / footprint mode */}
+          {navMode === "footprint" && (
+            <>
               {/*footprint navigation */}
               {footprintActive && footprintTo && selectedSection && (
                 <FootprintNav
@@ -232,8 +241,8 @@ export default function LandingPage() {
                   to={footprintTo}
                   active={footprintActive}
                   onArrive={() => {
-                    setFootprintActive(false);
-                    setActiveSection(selectedSection);
+                    setFootprintActive(false); //reset footprint
+                    setActiveSection(selectedSection); //shoow content popup
                     setSelectedSection(null);
                   }}
                 />

@@ -29,7 +29,7 @@ export default function FootprintNav({
     setFootprints([]); //reset when starting
 
     const totalSteps = 8; //total number of footprints
-    const stepInterval = 350; //time between steps
+    const stepInterval = 200; //time between steps
     //calculate direction
     const dx = to.x - from.x;
     const dy = to.y - from.y;
