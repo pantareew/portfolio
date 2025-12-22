@@ -7,6 +7,7 @@ import MapSections from "./MapSections";
 import WandOverlay from "./WandOverlay";
 import MapInstruction from "./MapInstruction";
 import ContentPopup from "./ContentPopup";
+import FootprintNav from "./FootprintNav";
 
 interface Section {
   name: string;
@@ -31,12 +32,17 @@ export default function LandingPage() {
   const [pageIndex, setPageIndex] = useState(0); //index of content section page
   //mobile mode
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640; //check if app is opened on mobile
-  const [footprintActive, setFootprintActive] = useState(false); //if footprint is currently animating
-  const [footprintFrom, setFootprintFrom] = useState({ x: 0, y: 0 }); //start position of footprint
+  const [selectedSection, setSelectedSection] = useState<Section | null>(null); //destination section
+  const [footprintActive, setFootprintActive] = useState(false); //activate footprint to animate
   const [footprintTo, setFootprintTo] = useState<{
     x: number;
     y: number;
-  } | null>(null); //destination of footprint
+  } | null>(null); //destination position of footprint
+  //start position of footprint (instruction box position)
+  const instructionBoxPosition = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  };
 
   //set sectons after component mount since window not available on server
   useEffect(() => {
@@ -179,7 +185,7 @@ export default function LandingPage() {
                   <div className="absolute inset-0 flex items-center justify-center text-center">
                     <MapInstruction
                       words={[
-                        "Instructions\nPoint your wand to:\nTOP LEFT to reveal SKILLS\nTOP RIGHT to reveal ABOUT ME\nBOTTOM LEFT to reveal EXPERIENCE\nBOTTOM RIGHT to reveal PROJECTS",
+                        "Reveal the Map\nPoint your wand to the corners of the map:\nTop Left: Skills\nTop Right: About Me\nBottom Left: Experience\nBottom Right: Projects",
                       ]}
                     />
                   </div>
@@ -202,7 +208,7 @@ export default function LandingPage() {
                   <div className="absolute inset-0 flex items-center justify-center text-center">
                     <MapInstruction
                       words={[
-                        "Instructions\nTap a section to view details\nFootprints will take you there",
+                        "Explore the Map\nTap a section to reveal its story\nFootprints will guide your path\nLet’s dive into my world!",
                       ]}
                     />
                   </div>
@@ -212,11 +218,26 @@ export default function LandingPage() {
               <MapSections
                 sections={sections}
                 onSectionClick={(section) => {
-                  setActiveSection(section);
-                  setPageIndex(0); // reset page index when opening section
+                  if (footprintActive) return; //disable footprint if content popup is currently rendering
+                  setSelectedSection(section); //destination section
+                  setFootprintTo({ x: section.x, y: section.y }); //position of destination
+                  setFootprintActive(true); //start moving footprint
                 }}
                 showAllSections={true}
               />
+              {/*footprint navigation */}
+              {footprintActive && footprintTo && selectedSection && (
+                <FootprintNav
+                  from={instructionBoxPosition}
+                  to={footprintTo}
+                  active={footprintActive}
+                  onArrive={() => {
+                    setFootprintActive(false);
+                    setActiveSection(selectedSection);
+                    setSelectedSection(null);
+                  }}
+                />
+              )}
             </>
           )}
           {/*show content popup for selected section*/}

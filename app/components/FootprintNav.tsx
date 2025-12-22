@@ -1,10 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
+
+interface Footprint {
+  x: number;
+  y: number;
+  rotation: number;
+}
+
 interface FootprintNavProps {
-  from: { x: number; y: number }; //start position
-  to: { x: number; y: number }; //destination section position
-  active: boolean; //determine if animation run
-  onArrive: () => void; //notify parent that it arrives destination
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  active: boolean;
+  onArrive: () => void;
 }
 
 export default function FootprintNav({
@@ -13,38 +21,73 @@ export default function FootprintNav({
   active,
   onArrive,
 }: FootprintNavProps) {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [footprints, setFootprints] = useState<Footprint[]>([]);
+
   useEffect(() => {
     if (!active) return;
-    setCurrentStep(0);
-    const duration = 1200;
-    const start = performance.now();
-    const animate = (time: number) => {
-      const elapsed = time - start;
-      const t = Math.min(elapsed / duration, 1);
-      setCurrentStep(t);
-      if (t < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        onArrive();
+
+    setFootprints([]); //reset when starting
+
+    const totalSteps = 8; //total number of footprints
+    const stepInterval = 350; //time between steps
+    //calculate direction
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+
+    //calculate angle
+    const angleRad = Math.atan2(dy, dx); //convert direction to angle
+    const angleDeg = (angleRad * 180) / Math.PI; //rotation (walking up-footprint rotate up, walking down-footprint rotate down)
+
+    let step = 0;
+
+    const interval = setInterval(() => {
+      step++;
+
+      const progress = step / totalSteps;
+
+      //base position
+      const x = from.x + dx * progress;
+      const y = from.y + dy * progress;
+
+      //left-right stepping
+      const sideOffset = step % 2 === 0 ? -8 : 8;
+
+      const offsetX = Math.cos(angleRad + Math.PI / 2) * sideOffset;
+      const offsetY = Math.sin(angleRad + Math.PI / 2) * sideOffset;
+
+      setFootprints((prev) => [
+        ...prev,
+        {
+          x: x + offsetX,
+          y: y + offsetY,
+          rotation: angleDeg,
+        },
+      ]);
+      //last step
+      if (step >= totalSteps) {
+        clearInterval(interval);
+        onArrive(); //open popup
       }
-    };
-    requestAnimationFrame(animate);
-  }, [active, onArrive]);
-  if (!active) return null;
-  const x = from.x + (to.x - from.x) * currentStep;
-  const y = from.y + (to.y - from.y) * currentStep;
+    }, stepInterval);
+
+    return () => clearInterval(interval);
+  }, [active, from, to, onArrive]);
 
   return (
-    <img
-      src="/assets/footprints.png"
-      alt="footsteps"
-      className="absolute w-12 pointer-events-none"
-      style={{
-        left: x,
-        top: y,
-        transform: "translate(-50%, -50%)",
-      }}
-    />
+    <>
+      {footprints.map((footprint, i) => (
+        <img
+          key={i}
+          src="/assets/footprint.png"
+          alt="footstep"
+          className="absolute w-10 pointer-events-none opacity-80"
+          style={{
+            left: footprint.x,
+            top: footprint.y,
+            transform: `translate(-50%, -50%) rotate(${footprint.rotation}deg)`,
+          }}
+        />
+      ))}
+    </>
   );
 }
