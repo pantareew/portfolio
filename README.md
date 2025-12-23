@@ -6,8 +6,19 @@ Rather than using a traditional scroll-based layout, the site is designed as a s
 The interface focuses heavily on user engagement and narrative flow, using animated transitions, contextual instructions, and multiple navigation modes to guide users through different sections. The goal was to create a memorable experience that reflects both my technical skills and my approach to thoughtful and immersive UI design.
 
 ## Features
-- Wand-based reveal interaction, exclusively for laptop and desktop
-- Footprint-guided navigation through mobile view and Reveal All mode
+### Narrative Intro (Castle Entry)
+Users begin at a castle entrance before entering the map, setting the tone and introducing the experience through storytelling rather than immediate content
+### Marauder’s Map–Inspired Navigation
+The main interface is a magical map where sections are positioned spatially instead of vertically, encouraging exploration over scrolling
+### Dual Navigation Modes (Wand & Footprint)
+- Wand Mode (Desktop):
+Users reveal sections by pointing a wand, creating a playful and immersive interaction
+- Footprint Mode (Mobile / Reveal All):
+Animated footprints guide users to selected sections, ensuring usability across devices
+### Animated Content Popup
+Each section opens in a popup with page transitions and navigation buttons, allowing users to focus on one section at a time and keeping attention on the current story
+### Micro-interactions
+Subtle animations, transitions, and visual cues are used throughout to enhance feedback and immersion without overwhelming the user
 
 ## Tech Stack
 - Next.js (App Router)
