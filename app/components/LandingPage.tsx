@@ -212,6 +212,29 @@ export default function LandingPage() {
               )}
             </>
           )}
+          {/*github and linkedin buttons */}
+          <div className="absolute flex justify-center gap-4 top-5 sm:top-auto sm:bottom-10 left-1/2 -translate-x-1/2 z-50">
+            <a
+              href="https://github.com/pantareew"
+              target="_blank" //open new tab
+              className={`px-5 py-2 rounded-full text-sm font-semibold backdrop-blur
+               hover:scale-105 transition
+                ${navMode === "wand" ? "text-[#3b2f1a]" : "text-[#f6e7c8]"} 
+               ${navMode === "wand" ? "bg-[#f6e7c8]/50" : "bg-[#3b2f1a]/50"}`}
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/pantareew"
+              target="_blank"
+              className={`px-5 py-2 rounded-full text-sm font-semibold backdrop-blur
+               hover:scale-105 transition
+                ${navMode === "wand" ? "text-[#3b2f1a]" : "text-[#f6e7c8]"} 
+               ${navMode === "wand" ? "bg-[#f6e7c8]/50" : "bg-[#3b2f1a]/50"}`}
+            >
+              LinkedIn
+            </a>
+          </div>
           {/*map instruction */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <div className="relative flex justify-center">
@@ -228,7 +251,7 @@ export default function LandingPage() {
                   words={
                     navMode === "wand"
                       ? [
-                          "Reveal the Map\nPoint your wand to the corners of the map:\nTop Left: Skills\nTop Right: About Me\nBottom Left: Experience\nBottom Right: Projects",
+                          "Reveal the Map\nPoint your wand to the corners of the map:\nTop Left: About Me\nTop Right: Experience\nBottom Left: Skills\nBottom Right: Projects\nClick 'Reveal All' to uncover every section!",
                         ]
                       : [
                           "Explore the Map\nTap a section to reveal its story\nFootprints will guide your path\nLet’s dive into my world!",

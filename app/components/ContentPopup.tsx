@@ -69,7 +69,7 @@ export default function ContentPopup({
           <button
             onClick={onPrev}
             disabled={pageIndex === 0}
-            className="px-6 py-2 rounded-full bg-[#8b6b3f] text-[#fdf6e3]
+            className="text-xs sm:text-base px-4 sm:px-6 py-2 rounded-full bg-[#8b6b3f] text-[#fdf6e3]
         font-semibold
         hover:bg-[#7a5d36]
         transition
@@ -82,7 +82,7 @@ export default function ContentPopup({
             onClick={onNext}
             disabled={pageIndex === section.content.length - 1}
             className="
-        px-6 py-2 rounded-full bg-[#8b6b3f] text-[#fdf6e3]
+        text-xs sm:text-base px-4 sm:px-6 py-2 rounded-full bg-[#8b6b3f] text-[#fdf6e3]
         font-semibold
         hover:bg-[#7a5d36]
         transition
@@ -93,7 +93,7 @@ export default function ContentPopup({
           </button>
           <button
             onClick={onExit}
-            className="px-4 py-2 rounded-full text-white bg-[#a2833c] text-[#3b2f1a] hover:bg-[#b89645] tracking-wide"
+            className="text-xs sm:text-base px-4 py-2 rounded-full text-white bg-[#a2833c] text-[#3b2f1a] hover:bg-[#b89645] tracking-wide"
           >
             Close
           </button>
