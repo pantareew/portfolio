@@ -8,6 +8,7 @@ import WandOverlay from "./WandOverlay";
 import MapInstruction from "./MapInstruction";
 import ContentPopup from "./ContentPopup";
 import FootprintNav from "./FootprintNav";
+import { title } from "process";
 
 type NavMode = "wand" | "footprint";
 interface Section {
@@ -15,7 +16,9 @@ interface Section {
   x: number;
   y: number;
   content: {
-    text: string;
+    title?: string;
+    description: string;
+    tech?: string[];
     image?: string;
   }[];
 }
@@ -84,9 +87,29 @@ export default function LandingPage() {
           x: w - paddingX,
           y: paddingY,
           content: [
-            { text: "Hi! I'm Pantaree, a curious and creative developer." },
             {
-              text: "I love exploring new technologies and building interactive projects.",
+              title: "Billmate",
+              description:
+                "A full-stack web application that simplifies shared expenses by combining intelligent bill splitting with AI-powered receipt parsing. Instead of manually entering bill details, users can upload a photo of their receipt, which is processed using OpenAI Vision to automatically extract key information such as the total amount and merchant name.\n Users can then assign the bill to a group, select participants, and split costs instantly, with real-time tracking of payments, approvals, and notifications.",
+              tech: [
+                "Next.js",
+                "FastAPI",
+                "TypeScript",
+                "PostgreSQL",
+                "Supabase",
+                "OpenAI Vision",
+              ],
+              image: "/assets/billmate.png",
+            },
+            {
+              description:
+                "Hi! I'm Pantaree, a curious and creative developer.",
+              image: "/assets/swinlead.png",
+            },
+            {
+              description:
+                "Hi! I'm Pantaree, a curious and creative developer.",
+              image: "/assets/aod.png",
             },
           ],
         },
@@ -96,11 +119,12 @@ export default function LandingPage() {
           y: h - paddingY,
           content: [
             {
-              text: "Built a trading platform integrating web3 wallets.",
-              image: "/assets/projects/trading-platform.png",
+              description: "Built a trading platform integrating web3 wallets.",
+              image: "/assets/usertune.png",
             },
             {
-              text: "Worked on multiple full-stack web apps with React and Next.js.",
+              description:
+                "Worked on multiple full-stack web apps with React and Next.js.",
               image: "/assets/projects/fullstack-app.png",
             },
           ],
@@ -111,12 +135,18 @@ export default function LandingPage() {
           y: h - paddingY,
           content: [
             {
-              text: "Built a trading platform integrating web3 wallets.",
-              image: "/assets/projects/trading-platform.png",
+              description: "Built a trading platform integrating web3 wallets.",
+              image: "/assets/usertune.png",
             },
             {
-              text: "Worked on multiple full-stack web apps with React and Next.js.",
-              image: "/assets/instructionBox.png",
+              description:
+                "Worked on multiple full-stack web apps with React and Next.js.",
+              image: "/assets/trading.png",
+            },
+            {
+              description:
+                "Worked on multiple full-stack web apps with React and Next.js.",
+              image: "/assets/baansub.png",
             },
           ],
         },
@@ -125,9 +155,14 @@ export default function LandingPage() {
           x: paddingX,
           y: paddingY,
           content: [
-            { text: "Hi! I'm Pantaree, a curious and creative developer." },
             {
-              text: "I love exploring new technologies and building interactive projects.",
+              description:
+                "Hi there! Pantaree a curious and creative developer.",
+            },
+            {
+              description:
+                "She graduated Computer Science at Swinburne in December 2024.",
+              image: "assets/urmate.png",
             },
           ],
         },
@@ -281,6 +316,7 @@ export default function LandingPage() {
                     setFootprintActive(false); //reset footprint
                     setActiveSection(selectedSection); //shoow content popup
                     setSelectedSection(null);
+                    setPageIndex(0); //reset page index
                   }}
                 />
               )}

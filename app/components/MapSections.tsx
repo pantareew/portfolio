@@ -1,5 +1,7 @@
 interface SectionContent {
-  text: string;
+  title?: string;
+  description: string;
+  tech?: string[];
   image?: string;
 }
 interface Section {

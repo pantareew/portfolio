@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 interface SectionContent {
-  text: string;
+  title?: string;
+  description: string;
+  tech?: string[];
   image?: string;
 }
 interface Section {
@@ -57,10 +59,22 @@ export default function ContentPopup({
               <img
                 src={page.image}
                 alt={section.name}
-                className="w-full max-h-80 object-contain mb-6 rounded-md shadow-md border border-[#c2a96b]/40 bg-white/40 p-2"
+                className="w-full max-h-80 object-contain mb-4 rounded-md shadow-md border border-[#c2a96b]/40 bg-white/40 p-2"
               />
             )}
-            <p className="text-lg leading-relaxed">{page.text}</p>
+            {page.title && (
+              <h3 className="text-lg font-semibold mb-2">{page.title}</h3>
+            )}
+
+            <p className="mb-3 leading-relaxed whitespace-pre-line">
+              {page.description}
+            </p>
+
+            {page.tech && (
+              <p className="text-sm text-[#5a4a2a]">
+                Built with: <strong>{page.tech.join(", ")}</strong>
+              </p>
+            )}
           </motion.div>
         </AnimatePresence>
 
