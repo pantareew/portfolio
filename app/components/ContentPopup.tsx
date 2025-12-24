@@ -37,7 +37,7 @@ export default function ContentPopup({
         backdrop-blur-xl bg-[#f6e7c8]/70
         border border-[#d8c59a]/20
         shadow-[0_0_40px_rgba(210,180,80,0.25)]
-        rounded-2xl p-8
+        rounded-2xl px-8 py-4
         shadow-2xl
         "
       >
@@ -63,7 +63,9 @@ export default function ContentPopup({
               />
             )}
             {page.title && (
-              <h3 className="text-lg font-semibold mb-2">{page.title}</h3>
+              <h3 className="text-lg font-semibold mb-2 tracking-wide">
+                {page.title}
+              </h3>
             )}
 
             <p className="mb-3 leading-relaxed whitespace-pre-line">

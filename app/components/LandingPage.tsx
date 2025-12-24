@@ -93,8 +93,8 @@ export default function LandingPage() {
                 "A full-stack web application that simplifies shared expenses by combining intelligent bill splitting with AI-powered receipt parsing. Instead of manually entering bill details, users can upload a photo of their receipt, which is processed using OpenAI Vision to automatically extract key information such as the total amount and merchant name.\n Users can then assign the bill to a group, select participants, and split costs instantly, with real-time tracking of payments, approvals, and notifications.",
               tech: [
                 "Next.js",
-                "FastAPI",
                 "TypeScript",
+                "FastAPI",
                 "PostgreSQL",
                 "Supabase",
                 "OpenAI Vision",
@@ -102,13 +102,29 @@ export default function LandingPage() {
               image: "/assets/billmate.png",
             },
             {
+              title: "SwinLead",
               description:
-                "Hi! I'm Pantaree, a curious and creative developer.",
+                "A student engagement platform rebuilt to improve how members discover events, access updates, and interact with the organisation. The platform was redesigned from the ground up with a focus on usability, accessibility, and mobile responsiveness.\n Using Next.js and TypeScript, we integrated Webiny CMS to allow non-technical team members to manage content and updates independently, significantly reducing manual effort.",
+              tech: [
+                "Next.js",
+                "TypeScript",
+                "Tailwind CSS",
+                "Webiny CMS",
+                "AWS",
+              ],
               image: "/assets/swinlead.png",
             },
             {
+              title: "Alpha Omega Digital",
               description:
-                "Hi! I'm Pantaree, a curious and creative developer.",
+                "A business website built to support rapid content updates. Working from Figma designs, I developed modular and reusable React components with a strong focus on cross-browser compatibility.\n Contentful CMS was integrated to allow the business to manage and publish content efficiently, significantly reducing update turnaround times.",
+              tech: [
+                "Next.js",
+                "React",
+                "Contentful CMS",
+                "Tailwind CSS",
+                "Vercel",
+              ],
               image: "/assets/aod.png",
             },
           ],
@@ -119,13 +135,27 @@ export default function LandingPage() {
           y: h - paddingY,
           content: [
             {
-              description: "Built a trading platform integrating web3 wallets.",
-              image: "/assets/usertune.png",
+              description:
+                "I’m a holistic full-stack developer with a passion for building end-to-end digital experiences. My skills span UX design with Figma, frontend development using modern frameworks, and backend engineering with both SQL and NoSQL databases. I also explore cutting-edge technologies, including AI and Blockchain, to create innovative and impactful solutions.",
             },
             {
+              title: "Frontend Development",
               description:
-                "Worked on multiple full-stack web apps with React and Next.js.",
-              image: "/assets/projects/fullstack-app.png",
+                "Next.js | TypeScript | React | JavaScript | Tailwind CSS | Bootstrap | Material UI | Vue CLI | HTML/CSS",
+            },
+            {
+              title: "Backend Development & Databases",
+              description:
+                "Python | FastAPI | Django | Node.js | Express.js | MongoDB | PostgreSQL | MySQL",
+            },
+            {
+              title: "AI & Blockchain",
+              description: "OpenAI API | Solidity | Web3.py",
+            },
+            {
+              title: "Tools",
+              description:
+                "Git | GitHub | Figma | Jira | Trello | Confluence | VS Code | Chrome DevTools",
             },
           ],
         },
@@ -135,17 +165,38 @@ export default function LandingPage() {
           y: h - paddingY,
           content: [
             {
-              description: "Built a trading platform integrating web3 wallets.",
+              title: "UserTune Plugin",
+              description:
+                "A Chrome extension designed to improve web accessibility for users with dyslexia, low vision, and color blindness. Users can customize UI settings, such as font styles or high-contrast mode, which are applied automatically across all websites. User Acceptance Testing with diverse beta users guided iterative improvements, resulting in higher usability and significantly better user satisfaction.",
+              tech: [
+                "JavaScript",
+                "Python",
+                "MySQL",
+                "Webpack",
+                "Jest",
+                "Material UI",
+              ],
               image: "/assets/usertune.png",
             },
             {
+              title: "Decentralized Trading Platform",
               description:
-                "Worked on multiple full-stack web apps with React and Next.js.",
+                "A peer-to-peer digital trading platform built to provide secure and transparent cryptocurrency transactions. Users connect their Ethereum wallets and interact with transaction flows validated through Solidity smart contracts and Web3.py integration tests, ensuring reliability and trust.\n FastAPI backend manages trade execution and data storage efficiently while maintaining security and performance.",
+              tech: [
+                "React",
+                "FastAPI",
+                "Web3.py",
+                "MySQL",
+                "Ganache",
+                "Solidity",
+              ],
               image: "/assets/trading.png",
             },
             {
+              title: "Baan Sub Takhian Website",
               description:
-                "Worked on multiple full-stack web apps with React and Next.js.",
+                "A full-stack web application built to improve citizen access to services and provide timely community updates for a local Thai government agency. Custom REST APIs and responsive frontend features were developed to enhance user engagement, streamline information delivery, and increase overall public satisfaction.",
+              tech: ["React", "Node.js", "Express.js", "MongoDB", "Bootstrap"],
               image: "/assets/baansub.png",
             },
           ],
@@ -157,12 +208,16 @@ export default function LandingPage() {
           content: [
             {
               description:
-                "Hi there! Pantaree a curious and creative developer.",
+                "Hi there! I’m Pantaree. I graduated in Computer Science from Swinburne University last December, and since then, I’ve been diving into the world of tech support. BUT coding never left me! I’ve been building web projects, experimenting with new technologies, and dreaming up ideas I can turn into real products. I love exploring new concepts, taking on challenges, and figuring out cool ways to make things work 😎",
             },
             {
               description:
-                "She graduated Computer Science at Swinburne in December 2024.",
+                "My love for startups began with Startmate, where I got to dive into the startup world and meet so many bright minds making an impact. During the program, I came up with an idea for a platform that connects people through shared interests and can't-miss deals. I built a prototype of ‘urmate’, making it easy to meet new friends for activities you both enjoy or to find someone to share a ‘buy one, get one free’ offer. That experience really reinforced my passion for working in fast-paced and innovative startup environments 🌞",
               image: "assets/urmate.png",
+            },
+            {
+              description:
+                "I’m curious, ambitious, and always up for trying new things. I love exploring different experiences and believe every one of them is valuable! I enjoy stepping outside my comfort zone and I’m not afraid of making mistakes. With a strong can-do mindset, I embrace challenges, explore the unknown, and keep pushing myself to grow 🌟",
             },
           ],
         },
