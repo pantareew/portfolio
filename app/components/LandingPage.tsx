@@ -305,6 +305,17 @@ export default function LandingPage() {
           {/*github and linkedin buttons */}
           <div className="absolute flex justify-center gap-4 top-5 sm:top-auto sm:bottom-10 left-1/2 -translate-x-1/2 z-50">
             <a
+              href="/assets/CV_Pantaree_Wechsathol.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-5 py-2 rounded-full text-sm font-semibold backdrop-blur
+              hover:scale-105 transition
+              ${navMode === "wand" ? "text-[#3b2f1a]" : "text-[#f6e7c8]"} 
+              ${navMode === "wand" ? "bg-[#f6e7c8]/50" : "bg-[#3b2f1a]/50"}`}
+            >
+              Resume
+            </a>
+            <a
               href="https://github.com/pantareew"
               target="_blank" //open new tab
               className={`px-5 py-2 rounded-full text-sm font-semibold backdrop-blur
